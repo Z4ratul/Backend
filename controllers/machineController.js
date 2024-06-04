@@ -34,12 +34,23 @@ class MachineController {
 
     async findAllWeb(req, res, next) {
         try {
-            let machines;
-            machines = await Machines.findAll({
+            const machines = await Machines.findAll({
                 include: [
-                    { model: Manufacturers, as: 'Manufacturer' },
-                    { model: MachineTypes, as: 'MachineType' },
-                    { model: Partners, as: 'Partner' },
+                    {
+                        model: Manufacturers,
+                        attributes: ['id', 'name'],
+                        as: 'Manufacturer'
+                    },
+                    {
+                        model: MachineTypes,
+                        attributes: ['id', 'name'],
+                        as: 'MachineType'
+                    },
+                    {
+                        model: Partners,
+                        attributes: ['id', 'shortName'],
+                        as: 'Partner'
+                    }
                 ]
             });
             return res.json(machines);

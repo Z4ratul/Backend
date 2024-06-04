@@ -49,14 +49,25 @@ class RequestController{
         }
     }
 
-    async findAllWeb(req, res, next){
+    async findAllWeb(req, res, next) {
         try {
-            let requests;
-            requests = await Requests.findAll({
+            const requests = await Requests.findAll({
                 include: [
-                    { model: Machines, as: 'Machine' },
-                    { model: Partners, as: 'Partner' },
-                    { model: ServiceLists, as: 'ServiceList' },
+                    {
+                        model: Machines,
+                        attributes: ['VINNumber', 'modelName'],
+                        as: 'Machine'
+                    },
+                    {
+                        model: Partners,
+                        attributes: ['id', 'shortName'],
+                        as: 'Partner'
+                    },
+                    {
+                        model: ServiceLists,
+                        attributes: ['id', 'name'],
+                        as: 'ServiceList'
+                    }
                 ]
             });
             return res.json(requests);
