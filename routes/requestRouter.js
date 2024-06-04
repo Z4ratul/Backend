@@ -4,8 +4,8 @@ const requestController = require('../controllers/requestController')
 
 router.post('/', requestController.create)
 router.post('/new', requestController.createAll)
-router.get('/', requestController.findAll)
+router.get('/:PartnerId', requestController.findAll)
 router.get('/web', requestController.findAllWeb)
-router.get('/active/:id', requestController.getAllActive)
+router.get('/active/:PartnerId', requestController.getAllActive)
 
 module.exports = router
