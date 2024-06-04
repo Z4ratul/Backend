@@ -32,6 +32,23 @@ class MachineController {
         }
     }
 
+    async findAllWeb(req, res, next) {
+        try {
+            let machines;
+            machines = await Machines.findAll({
+                include: [
+                    { model: Manufacturers, as: 'Manufacturer' },
+                    { model: MachineTypes, as: 'MachineType' },
+                    { model: Partners, as: 'Partner' },
+                ]
+            });
+            return res.json(machines);
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
+        }
+    }
+    
+
     async findById(req, res, next) {
         try {
             const { VINNumber } = req.params;

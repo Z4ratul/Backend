@@ -49,6 +49,23 @@ class RequestController{
         }
     }
 
+    async findAllWeb(req, res, next){
+        try {
+            let requests;
+            requests = await Requests.findAll({
+                include: [
+                    { model: Machines, as: 'Machine' },
+                    { model: Partners, as: 'Partner' },
+                    { model: ServiceLists, as: 'ServiceList' },
+                ]
+            });
+            return res.json(requests);
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
+        }
+    }
+    
+
     async getAllActive(req, res, next) {
         try {
             const {id} = req.params;

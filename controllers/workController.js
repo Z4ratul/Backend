@@ -12,14 +12,23 @@ class WorkController {
         }
     }
 
-    async findAll(req, res, next) {
+    async findAllWeb(req, res, next) {
         try {
-            const works = await Works.findAll();
+            const works = await Works.findAll({
+                include: [
+                    { model: Details, as: 'Detail' },
+                    { model: Statuses, as: 'Status' },
+                    { model: FullServiceLists, as: 'FullServiceList' },
+                    { model: Employees, as: 'Employee' },
+                    { model: Requests, as: 'Request' }
+                ]
+            });
             return res.json(works);
         } catch (e) {
             next(ApiError.badRequest(e.message));
         }
     }
+    
 
     async findById(req, res, next) {
         try {
