@@ -12,42 +12,38 @@ class WorkController {
         }
     }
 
-    async findAllWeb(req, res, next) {
-        try {
-            const works = await Works.findAll({
-                include: [
-                    {
-                        model: Details,
-                        attributes: ['vendorCode', 'detailName'],
-                        as: 'Detail'
-                    },
-                    {
-                        model: Statuses,
-                        attributes: ['id', 'name'],
-                        as: 'Status'
-                    },
-                    {
-                        model: FullServiceLists,
-                        attributes: ['id', 'name', 'price'],
-                        as: 'FullServiceList'
-                    },
-                    {
-                        model: Employees,
-                        attributes: ['id', 'name', 'surname'],
-                        as: 'Employee'
-                    },
-                    {
-                        model: Requests,
-                        attributes: ['id', 'description'],
-                        as: 'Request'
-                    }
-                ]
-            });
-            return res.json(works);
-        } catch (e) {
-            next(ApiError.badRequest(e.message));
-        }
+async findAllWeb(req, res, next) {
+    try {
+        const works = await Works.findAll({
+            include: [
+                {
+                    model: Details,
+                    attributes: ['vendorCode', 'detailName']
+                },
+                {
+                    model: Statuses,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: FullServiceLists,
+                    attributes: ['id', 'name', 'price']
+                },
+                {
+                    model: Employees,
+                    attributes: ['id', 'name', 'surname']
+                },
+                {
+                    model: Requests,
+                    attributes: ['id', 'description']
+                }
+            ]
+        });
+        return res.json(works);
+    } catch (e) {
+        next(ApiError.badRequest(e.message));
     }
+}
+
     
 
     async findById(req, res, next) {
