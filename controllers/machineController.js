@@ -32,32 +32,30 @@ class MachineController {
         }
     }
 
-    async findAllWeb(req, res, next) {
-        try {
-            const machines = await Machines.findAll({
-                include: [
-                    {
-                        model: Manufacturers,
-                        attributes: ['id', 'name'],
-                        as: 'Manufacturer'
-                    },
-                    {
-                        model: MachineTypes,
-                        attributes: ['id', 'name'],
-                        as: 'MachineType'
-                    },
-                    {
-                        model: Partners,
-                        attributes: ['id', 'shortName'],
-                        as: 'Partner'
-                    }
-                ]
-            });
-            return res.json(machines);
-        } catch (e) {
-            next(ApiError.badRequest(e.message));
-        }
+async findAllWeb(req, res, next) {
+    try {
+        const machines = await Machines.findAll({
+            include: [
+                {
+                    model: Manufacturers,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: MachineTypes,
+                    attributes: ['id', 'name']
+                },
+                {
+                    model: Partners,
+                    attributes: ['id', 'shortName']
+                }
+            ]
+        });
+        return res.json(machines);
+    } catch (e) {
+        next(ApiError.badRequest(e.message));
     }
+}
+
     
 
     async findById(req, res, next) {
