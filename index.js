@@ -6,16 +6,14 @@ const cors = require('cors')
 const fileUpload = require('express-fileupload')
 const router = require('./routes/index')
 const errorHandler = require('./middleware/ErrorHendlingMiddleware')
-const multer = require('multer')
+const path = require('path')
 
 const PORT = process.env.PORT || 8080
 
 const server = express()
 server.use(cors())
 server.use(express.json())
-
-
-
+server.use(express.static(path.resolve(__dirname, 'static')))
 server.use(fileUpload())
 server.use('/api', router)
 server.use(errorHandler)

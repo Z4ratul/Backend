@@ -16,7 +16,12 @@ class ClientController {
 
     async findAll(req, res, next) {
         try {
-            const clients = await Clients.findAll();
+            const clients = await Clients.findAll({
+                include: {
+                    model: Partners,
+                    attributes: ['id', 'shortName']
+                }
+            });
             return res.json(clients);
         } catch (e) {
             next(ApiError.badRequest(e.message));
