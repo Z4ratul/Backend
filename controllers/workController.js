@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError");
-const { Works } = require('../models/models');
+const { Works, Details, Statuses, FullServiceLists, Employees, Requests } = require('../models/models');
 
 class WorkController {
     async create(req, res, next) {
