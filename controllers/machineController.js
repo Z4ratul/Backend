@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError");
-const { Machines } = require('../models/models');
+const { Machines, Manufacturers, MachineTypes, Partners } = require('../models/models');
 const uuid = require('uuid');
 const path = require('path');
 
