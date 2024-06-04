@@ -1,5 +1,5 @@
 const ApiError = require("../error/ApiError")
-const {Requests} = require('../models/models')
+const {Requests, Machines, Partners, ServiceLists} = require('../models/models')
 
 class RequestController{
 
