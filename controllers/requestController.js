@@ -49,32 +49,30 @@ class RequestController{
         }
     }
 
-    async findAllWeb(req, res, next) {
-        try {
-            const requests = await Requests.findAll({
-                include: [
-                    {
-                        model: Machines,
-                        attributes: ['VINNumber', 'modelName'],
-                        as: 'Machine'
-                    },
-                    {
-                        model: Partners,
-                        attributes: ['id', 'shortName'],
-                        as: 'Partner'
-                    },
-                    {
-                        model: ServiceLists,
-                        attributes: ['id', 'name'],
-                        as: 'ServiceList'
-                    }
-                ]
-            });
-            return res.json(requests);
-        } catch (e) {
-            next(ApiError.badRequest(e.message));
-        }
+async findAllWeb(req, res, next) {
+    try {
+        const requests = await Requests.findAll({
+            include: [
+                {
+                    model: Machines,
+                    attributes: ['VINNumber', 'modelName']
+                },
+                {
+                    model: Partners,
+                    attributes: ['id', 'shortName']
+                },
+                {
+                    model: ServiceLists,
+                    attributes: ['id', 'name']
+                }
+            ]
+        });
+        return res.json(requests);
+    } catch (e) {
+        next(ApiError.badRequest(e.message));
     }
+}
+
     
 
     async getAllActive(req, res, next) {
