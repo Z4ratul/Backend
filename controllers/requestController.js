@@ -58,6 +58,10 @@ class RequestController{
                             attributes: ['VINNumber', 'modelName']
                         },
                         {
+                            model: Partners,
+                            attributes: ['id', 'shortName']
+                        },
+                        {
                             model: ServiceLists,
                             attributes: ['id', 'name']
                         }
@@ -69,6 +73,10 @@ class RequestController{
                         {
                             model: Machines,
                             attributes: ['VINNumber', 'modelName']
+                        },
+                                                {
+                            model: Partners,
+                            attributes: ['id', 'shortName']
                         },
                         {
                             model: ServiceLists,
@@ -93,6 +101,10 @@ async findAllWeb(req, res, next) {
                     model: Machines,
                     attributes: ['VINNumber', 'modelName']
                 },
+                                        {
+                            model: Partners,
+                            attributes: ['id', 'shortName']
+                        },
                 {
                     model: ServiceLists,
                     attributes: ['id', 'name']
