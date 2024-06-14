@@ -63,32 +63,12 @@ async findAllWeb(req, res, next) {
         try {
             const { id } = req.params;
             const { DetailVendorCode, StatusId, FullServiceListId, EmployeeId, RequestId } = req.body;
-
-            // Update the Works entry
             const [updated] = await Works.update(
                 { DetailVendorCode, StatusId, FullServiceListId, EmployeeId, RequestId },
                 { where: { id } }
             );
-
             if (updated) {
                 const updatedWork = await Works.findOne({ where: { id } });
-
-                if (RequestId) {
-                    // Fetch all works related to the RequestId
-                    const relatedWorks = await Works.findAll({ where: { RequestId } });
-
-                    // Check if all works have StatusId equal to 2
-                    const allWorksCompleted = relatedWorks.every(work => work.StatusId === 2);
-
-                    if (allWorksCompleted) {
-                        const now = new Date();
-                        await Requests.update(
-                            { closeDate: now },
-                            { where: { id: RequestId } }
-                        );
-                    }
-                }
-
                 return res.json(updatedWork);
             }
             throw new Error(`Work with id ${id} not found`);
