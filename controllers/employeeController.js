@@ -53,14 +53,19 @@ class EmployeeController{
         }
     }
 
-    async findAll(req, res, next){
-        try {
-            const employees = await Employees.findAll()
-            return res.json(employees)
-        } catch (e) {
-            next(ApiError.badRequest(e.message));
-        }
-    }
+async findAll(req, res, next) {
+try {
+const employees = await Employees.findAll({
+include: [{
+model: Position,
+attributes: ['id', 'name'] // Specify the fields you want to include from the Position table
+}]
+});
+return res.json(employees);
+} catch (e) {
+next(ApiError.badRequest(e.message));
+}
+}
 
     async findById(req, res, next){
 
