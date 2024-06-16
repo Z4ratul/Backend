@@ -63,12 +63,25 @@ async findAllWeb(req, res, next) {
         try {
             const { id } = req.params;
             const { DetailVendorCode, StatusId, FullServiceListId, EmployeeId, RequestId } = req.body;
+
+            // Update the Works entry
             const [updated] = await Works.update(
                 { DetailVendorCode, StatusId, FullServiceListId, EmployeeId, RequestId },
                 { where: { id } }
             );
+
             if (updated) {
                 const updatedWork = await Works.findOne({ where: { id } });
+
+                // Check if StatusId is 2 and if there is a RequestId
+                if (StatusId === 2 && updatedWork.RequestId) {
+                    const now = new Date();
+                    await Requests.update(
+                        { closeDate: now },
+                        { where: { id: updatedWork.RequestId } }
+                    );
+                }
+
                 return res.json(updatedWork);
             }
             throw new Error(`Work with id ${id} not found`);
